@@ -21,11 +21,4 @@ public class tournée {
     }
 }
 
-public String getdateDebut() {
-        return horaireDebut;
-    }
-
-public String getdateFin() {
-        return horaireFin;
-    }
 
