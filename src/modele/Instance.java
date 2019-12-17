@@ -15,6 +15,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.OneToMany;
 
 /**
@@ -40,6 +42,7 @@ public class Instance implements Serializable {
     private Integer dureeMax;
     
     @Column(name = "Date_du_jour", nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date date;
     
     /* OneToMany : tournée */
@@ -56,7 +59,7 @@ public class Instance implements Serializable {
         tournees = new LinkedList<>();// accepte les doublons et on se sais combien on a de tournees
     }
 
-        public Instance(String nom, Integer dureeMin, Integer dureeMax, Date date) {
+    public Instance(String nom, Integer dureeMin, Integer dureeMax, Date date) {
         this.nom = nom;
         this.dureeMin = dureeMin;
         this.dureeMax = dureeMax;
@@ -73,9 +76,5 @@ public class Instance implements Serializable {
     @Override
     public String toString() {
         return "Instance{" + "idInstance=" + idInstance + ", nom=" + nom + ", dureeMin=" + dureeMin + ", dureeMax=" + dureeMax + ", date=" + date + ", tournees=" + tournees + '}';
-    }
-    
-    public static void main(String[] args) {
-        
     }
 }

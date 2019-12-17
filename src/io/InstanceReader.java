@@ -117,8 +117,8 @@ public class InstanceReader {
             // TODO : Vous pouvez ajoutez chacune des tournees a votre instance
             ////////////////////////////////////////////
             instance.listeTournee(elem.getDebut(), elem.getFin());
-            
-        }System.out.println(instance.toString());
+        }
+        System.out.println(instance.toString());
     }
 
     /**
