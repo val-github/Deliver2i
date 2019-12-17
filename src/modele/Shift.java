@@ -14,10 +14,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 /**
  *
- * @author Gwendoline
+ * @author Val
  */
 @Entity
 public class Shift implements Serializable {
@@ -43,6 +46,11 @@ public class Shift implements Serializable {
     /* ManyToOne : Tounees */
     private List<Tournee> tournees;
     
+    
+    /*ManyToOne : tournée    */
+    @ManyToOne
+    @JoinColumn(name="DEPT_ID")
+    private Departement departement;
     
     ///ATTENTION CONDITION !!!!
     public Shift() {

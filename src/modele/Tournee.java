@@ -12,6 +12,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 
 /**
  *
@@ -37,7 +39,10 @@ public class Tournee implements Serializable {
         this.horaireFin = new Date(0,0,0,10,0);
     }
 
-    /* OneToOne :  Shift */
+    /* OneToMany :  Shift */
+    
+  //  @OneToMany(mapped)
+    
     
     /* OneToOne : Instance */
     
@@ -57,7 +62,7 @@ public class Tournee implements Serializable {
 
     @Override
     public String toString() {
-        return "Tournee{" + "idTournee=" + idTournee + ", horaireDebut=" + horaireDebut.getHours() + ":" + horaireDebut.getMinutes() + ", horaireFin=" + horaireFin.getHours() + ":" + horaireFin.getMinutes() + '}';
+        return "\tTournee{" + "idTournee=" + idTournee + ", horaireDebut=" + horaireDebut.getHours() + ":" + horaireDebut.getMinutes() + ", horaireFin=" + horaireFin.getHours() + ":" + horaireFin.getMinutes() + "}\n";
     }
 
        
