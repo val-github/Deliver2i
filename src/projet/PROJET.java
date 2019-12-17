@@ -7,9 +7,9 @@ package projet;
 
 /**
  *
- * @author Val
+ * @author Gwendoline
  */
-public class Projet {
+public class PROJET {
 
     /**
      * @param args the command line arguments
