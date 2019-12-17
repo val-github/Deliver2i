@@ -68,11 +68,7 @@ public class Instance implements Serializable {
     private boolean ListeTournee(Date debut, Date fin)
     {
         Tournee t = new Tournee(debut,fin);
-        if(tournees.add(t)==true)
-        {
-            return true;
-        }
-        return false;
+        return tournees.add(t)==true;
     }
     
     public static void main(String[] args) {
