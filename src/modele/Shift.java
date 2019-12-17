@@ -48,9 +48,9 @@ public class Shift implements Serializable {
     
     
     /*ManyToOne : tournée    */
-    @ManyToOne
-    @JoinColumn(name="DEPT_ID")
-    private Departement departement;
+    //ManyToOne
+    //@JoinColumn(name="DEPT_ID")
+    //private Departement departement;
     
     ///ATTENTION CONDITION !!!!
     public Shift() {
