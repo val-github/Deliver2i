@@ -15,11 +15,11 @@ import io.exception.OpenFileException;
 import io.exception.ReaderException;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Scanner;
+import modele.Instance;
 
 /**
  * Classe qui permet de lire une instance pour le projet de POO3 2019/2020.
@@ -47,10 +47,12 @@ public class InstanceReader {
      * @throws ReaderException lorsque le fichier n'est pas au bon format ou ne pas etre ouvert.
      */
     public InstanceReader(String inputPath) throws ReaderException {
-        if (inputPath == null) {
+        if (inputPath == null) 
+        {
             throw new OpenFileException();
         }
-        if (!inputPath.endsWith(".csv")) {
+        if (!inputPath.endsWith(".csv")) 
+        {
             throw new FormatFileException("csv", "csv");
         }
         String instanceName = inputPath;
@@ -65,9 +67,12 @@ public class InstanceReader {
      */
     public void readInstance() throws ReaderException {
         Scanner scanner = null;
-        try {
+        try 
+        {
             scanner = new Scanner(instanceFile);
-        } catch (FileNotFoundException ex) {
+        } 
+        catch (FileNotFoundException ex) 
+        {
             throw new FileExistException(instanceFile.getName());
         }
         // Dans les 4 lignes qui suivent vous recuperez des informations generales sur l'instance.
@@ -75,18 +80,31 @@ public class InstanceReader {
         int dureeMin = readIntInLine(scanner, "Duree min");
         int dureeMax = readIntInLine(scanner, "Duree max");
         Date date = readDateInLine(scanner, "Date");
+        
         ////////////////////////////////////////////
         // TODO : Vous pouvez creer une instance.
         ////////////////////////////////////////////
+        Instance instance = new Instance(name,dureeMin,dureeMax,date);
+        System.out.println("0   "+instance.toString());
+        
+        
         readStringInLine(scanner, new String[]{"Debut", "Fin"});
         // Dans la boucle qui suit, nous allons lire les donnees relatives a chaque tournee.
-        while(true) {
+        int i=6;
+        while(true) 
+        {
+            i++;
             DebutFin elem = readPaireInLine(scanner);
-            if(elem == null) {
+            if(elem == null) 
+            {
                 break;
             }
             elem.addTime(date);
-            // Notez que elem est un objet qui contient deux attributs : une date de debut et une date de fin
+            
+            //System.out.println(i+ "= date debut : " + elem.getDebut().getHours() + ":" + elem.getDebut().getMinutes());
+            //System.out.println(i+ "= date fin : " + elem.getFin().getHours() + ":" + elem.getFin().getMinutes());
+            // Notez que elem est un objet qui contient deux attributs : 
+            // une date de debut et une date de fin
             // Vous pouvez acceder a ces deux attributs de la maniere suivante :
             // elem.getDebut()
             // elem.getFin()
@@ -98,7 +116,9 @@ public class InstanceReader {
             ////////////////////////////////////////////
             // TODO : Vous pouvez ajoutez chacune des tournees a votre instance
             ////////////////////////////////////////////
-        }
+            instance.listeTournee(elem.getDebut(), elem.getFin());
+            
+        }System.out.println(instance.toString());
     }
 
     /**
@@ -109,11 +129,14 @@ public class InstanceReader {
      */
     private void readStringInLine(Scanner scanner, String[] names) throws ReaderException {
         String[] values = nextLine(scanner);
-        if(values.length != names.length) {
+        if(values.length != names.length)
+        {
             throw new NumberColumnsException(numLigne, names);
         }
-        for(int col=0; col<values.length; col++) {
-            if (!values[col].equalsIgnoreCase(names[col])) {
+        for(int col=0; col<values.length; col++) 
+        {
+            if (!values[col].equalsIgnoreCase(names[col])) 
+            {
                 throw new FieldNameException(numLigne, col+1, names[col]);
             }
         } 
@@ -130,9 +153,12 @@ public class InstanceReader {
         String[] values = nextLine(scanner);
         checkLine(values, name);
         int val;
-        try {
+        try 
+        {
             val = Integer.parseInt(values[1]);
-        } catch (NumberFormatException ex) {
+        } 
+        catch (NumberFormatException ex) 
+        {
             throw new FieldFormatException(numLigne, 2, "un nombre entier");
         }
         return val;
@@ -146,20 +172,25 @@ public class InstanceReader {
      */
     private DebutFin readPaireInLine(Scanner scanner) throws ReaderException {
         String[] values = nextLine(scanner);
-        if(values.length == 0) {
+        if(values.length == 0) 
+        {
             return null;
         }
-        if (values.length < 2) {
+        if (values.length < 2) 
+        {
             throw new EmptyFieldException(numLigne, 2);
         } 
         DebutFin val;
-        try {
+        try 
+        {
             String pattern = "HH:mm";
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
             Date debut = simpleDateFormat.parse(values[0]);
             Date fin = simpleDateFormat.parse(values[1]);
             val = new DebutFin(debut, fin);
-        } catch (ParseException ex) {
+        } 
+        catch (ParseException ex) 
+        {
             throw new FieldFormatException(numLigne, 2, "un temps au format hh:mm");
         }
         return val;
@@ -176,11 +207,14 @@ public class InstanceReader {
         String[] values = nextLine(scanner);
         checkLine(values, name);
         Date val;
-        try {
+        try 
+        {
             String pattern = "dd/MM/yyyy";
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
             val = simpleDateFormat.parse(values[1]);
-        } catch (ParseException ex) {
+        } 
+        catch (ParseException ex) 
+        {
             throw new FieldFormatException(numLigne, 2, "une date au format jj/mm/aaaa");
         }
         return val;
@@ -207,10 +241,12 @@ public class InstanceReader {
      * @throws EmptyFieldException losque la valeur dans la seconde colonne n'est pas remplie
      */
     private void checkLine(String[] values, String name) throws FieldNameException, EmptyFieldException {
-        if (!values[0].equalsIgnoreCase(name)) {
+        if (!values[0].equalsIgnoreCase(name)) 
+        {
             throw new FieldNameException(numLigne, 1, name);
         }
-        if (values.length == 1 || values[1].length() == 0) {
+        if (values.length == 1 || values[1].length() == 0) 
+        {
             throw new EmptyFieldException(numLigne, 2);
         }
     }
@@ -222,8 +258,10 @@ public class InstanceReader {
      */
     private String[] nextLine(Scanner scanner) {
         String[] values = null;
-        do {
-            if(!scanner.hasNextLine()) {
+        do 
+        {
+            if(!scanner.hasNextLine()) 
+            {
                 return new String[]{};
             }
             String line = scanner.nextLine();
@@ -240,21 +278,25 @@ public class InstanceReader {
         private Date debut;
         private Date fin;
 
-        public DebutFin(Date debut, Date fin) {
+        public DebutFin(Date debut, Date fin) 
+        {
             this.debut = debut;
             this.fin = fin;
         }
         
-        public void addTime(Date d) {
+        public void addTime(Date d) 
+        {
             debut = new Date(debut.getTime() + d.getTime());
             fin = new Date(fin.getTime() + d.getTime());
         }
 
-        public Date getDebut() {
+        public Date getDebut() 
+        {
             return debut;
         }
 
-        public Date getFin() {
+        public Date getFin() 
+        {
             return fin;
         }
     }
@@ -263,11 +305,14 @@ public class InstanceReader {
      * Un petite test pour verifier que tout fonctionne correctement.
      */
     public static void main(String[] args) {
-        try {
-            InstanceReader reader = new InstanceReader("instance_test.csv");
+        try 
+        {
+            InstanceReader reader = new InstanceReader("instances/instance_test.csv");
             reader.readInstance();
             System.out.println("Instance lue avec success !");
-        } catch (ReaderException ex) {
+        } 
+        catch (ReaderException ex) 
+        {
             System.out.println(ex.getMessage());
         }
     }

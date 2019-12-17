@@ -60,19 +60,18 @@ public class Instance implements Serializable {
         tournees = new LinkedList<>(); // accepte les doublons et on se sais combien on a de tournees
     }
     
-    private void Lecture()
-    {
-
-    }
-    
-    private boolean ListeTournee(Date debut, Date fin)
+    public boolean listeTournee(Date debut, Date fin)
     {
         Tournee t = new Tournee(debut,fin);
         return tournees.add(t)==true;
     }
+
+    @Override
+    public String toString() {
+        return "Instance{" + "idInstance=" + idInstance + ", nom=" + nom + ", dureeMin=" + dureeMin + ", dureeMax=" + dureeMax + ", date=" + date + ", tournees=" + tournees + '}';
+    }
     
     public static void main(String[] args) {
-        Instance i = new Instance();
-        i.Lecture();
+        
     }
 }
