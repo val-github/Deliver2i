@@ -14,6 +14,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
@@ -29,9 +31,11 @@ public class Tournee implements Serializable {
     private Integer idTournee;
 
     @Column(name = "Horaire_debut", nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date horaireDebut;
     
     @Column(name = "Horaire_fin", nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date horaireFin;
 
     public Tournee() {

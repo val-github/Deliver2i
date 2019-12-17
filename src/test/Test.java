@@ -17,7 +17,8 @@ import javax.persistence.Persistence;
  */
 public class Test {
     public static void main(String[] args) {
-        final EntityManagerFactory emf = Persistence.createEntityManagerFactory("PROJETPU"); 
+        final EntityManagerFactory emf =
+        Persistence.createEntityManagerFactory("PROJETPU");  
         // Ici on met pas le nom de la base de donne mais le nom 
         //qu'il y a dans persistance.xml
         final EntityManager em = emf.createEntityManager();
@@ -31,6 +32,7 @@ public class Test {
                 InstanceReader reader = new InstanceReader("instances/instance_test.csv");
                 reader.readInstance();
 
+                System.out.println("=> Reader : " + reader.toString());
                 em.persist(reader);
                 et.commit();
             } 

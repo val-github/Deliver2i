@@ -17,6 +17,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
@@ -32,9 +34,11 @@ public class Shift implements Serializable {
     private Integer idShift;
 
     @Column(name = "Horaire_debut", nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date horaireDebut; //d
     
     @Column(name = "Horaire_fin", nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date horaireFin; //f
     
     @Column(name = "Duree", nullable = false)
