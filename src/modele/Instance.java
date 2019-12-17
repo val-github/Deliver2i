@@ -63,11 +63,7 @@ public class Instance implements Serializable {
     public boolean listeTournee(Date debut, Date fin)
     {
         Tournee t = new Tournee(debut,fin);
-        if(tournees.add(t)==true)
-        {
-            return true;
-        }
-        return false;
+        return tournees.add(t)==true;
     }
 
     @Override

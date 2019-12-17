@@ -6,6 +6,7 @@
     <class>modele.Solution</class>
     <class>modele.Tournee</class>
     <class>modele.Instance</class>
+    <class>modele.NewEntity</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:derby://localhost:1527/Projet"/>
       <property name="javax.persistence.jdbc.user" value="projet"/>
