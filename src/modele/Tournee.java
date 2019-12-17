@@ -6,6 +6,7 @@
 package modele;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,6 +14,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 /**
@@ -33,18 +36,20 @@ public class Tournee implements Serializable {
     
     @Column(name = "Horaire_fin", nullable = false)
     private Date horaireFin;
-
+    
     public Tournee() {
         this.horaireDebut = new Date(0,0,0,9,0);
         this.horaireFin = new Date(0,0,0,10,0);
     }
 
-    /* OneToMany :  Shift */
+    /* ManyToOne :  Shift */
+    @ManyToOne
+    private Shift shift;
     
-  //  @OneToMany(mapped)
+    /*ManyToOne : instance */
+    @ManyToOne
+    private Instance instance;
     
-    
-    /* OneToOne : Instance */
     
     
     public Tournee(Date dateDebut, Date dateFin) {

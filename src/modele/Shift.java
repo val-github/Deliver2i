@@ -6,6 +6,7 @@
 package modele;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -16,6 +17,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 /**
@@ -42,15 +44,10 @@ public class Shift implements Serializable {
     
     @Column(name = "Temps_mort", nullable = false)
     private Float tempsMort;
-
-    /* ManyToOne : Tounees */
-    private List<Tournee> tournees;
     
-    
-    /*ManyToOne : tournée    */
-    @ManyToOne
-    @JoinColumn(name="DEPT_ID")
-    private Departement departement;
+    /*OneToMany : tournée    */
+    @OneToMany(mappedBy="")
+    private Collection <Tournee> tournees;
     
     ///ATTENTION CONDITION !!!!
     public Shift() {
@@ -101,6 +98,7 @@ public class Shift implements Serializable {
      */
     private Float TempsMort()
     {
+        
         return duree;
     }
     

@@ -6,6 +6,7 @@
 package modele;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -14,6 +15,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 /**
  *
@@ -40,9 +42,11 @@ public class Instance implements Serializable {
     @Column(name = "Date_du_jour", nullable = false)
     private Date date;
     
+    /* OneToMany : tournée */
+    @OneToMany(mappedBy="Id_Instance")
+    private Collection <Tournee> tournees;
     
-    /* On a une liste de Tournee en ManyToOne*/
-    private List<Tournee> tournees;
+    
 
     public Instance() {
         this.nom = "";
