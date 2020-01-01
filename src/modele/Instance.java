@@ -6,6 +6,12 @@
 package modele;
 
 import java.io.Serializable;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.LinkedList;
@@ -18,6 +24,7 @@ import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.OneToMany;
+import static javax.swing.UIManager.getInt;
 
 /**
  *
@@ -26,7 +33,9 @@ import javax.persistence.OneToMany;
 @Entity
 public class Instance implements Serializable {
 
+    private Connection connection;
     private static final long serialVersionUID = 1L;
+    private static Instance instance;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column (name="Id_Instance")
@@ -49,7 +58,11 @@ public class Instance implements Serializable {
     @OneToMany(mappedBy="Id_Instance")
     private Collection <Tournee> tournees;
     
-    
+    public static Instance getInstance() throws ClassNotFoundException, SQLException{
+        if(instance == null)
+            instance = new Instance();
+        return instance;
+    }
 
     public Instance() {
         this.nom = "";
@@ -70,11 +83,28 @@ public class Instance implements Serializable {
     public boolean listeTournee(Date debut, Date fin)
     {
         Tournee t = new Tournee(debut,fin);
-        if(tournees.add(t)==true)
-        {
-            return true;
+        return tournees.add(t)==true;
+    }
+    
+    private void connect() throws ClassNotFoundException, SQLException {
+        String driverClass = "org.apache.derby.jdbc.ClientDriver";
+        String urlDatabase = "jdbc:derby://localhost:1527/Projet";
+        String user = "val";
+        String pwd = "100898";
+        Class.forName(driverClass);
+        connection = DriverManager.getConnection(urlDatabase, user, pwd);
+    }
+    
+    public List<Instance> ensInstance () throws SQLException {
+        List<Instance> instances = new ArrayList<>();
+        String requete = "SELECT * from instance";
+        try (Statement stmt = connection.createStatement(); ResultSet res = stmt.executeQuery(requete)) {
+            while (res.next()) {
+                Instance inst = new Instance(res.getString("nom"), res.getInt("dureeMin"), res.getInt("dureeMax"), res.getDate("date"));
+                instances.add(inst);
+            }
         }
-        return false;
+        return instances;
     }
 
     @Override
