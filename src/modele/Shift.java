@@ -9,7 +9,6 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 import java.util.LinkedList;
-import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,7 +17,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -52,6 +50,9 @@ public class Shift implements Serializable {
     /*OneToMany : tournée    */
     @OneToMany(mappedBy="")
     private Collection <Tournee> tournees;
+    
+    @ManyToOne
+    private Instance instance;
     
     ///ATTENTION CONDITION !!!!
     public Shift() {
@@ -102,11 +103,13 @@ public class Shift implements Serializable {
      */
     private Float TempsMort()
     {
+        float tempsMort = 0;
         
         return duree;
     }
     
     public static void main(String[] args) {
+        
         /*Date debut = new Date(0,0,0,10,0);
         Date fin = new Date(0,0,0,11,10);
         

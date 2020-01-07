@@ -6,11 +6,13 @@
 package modele;
 
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 /**
  *
@@ -28,7 +30,11 @@ public class Solution implements Serializable {
     @Column(name = "Cout_Total", nullable = false)
     private Float coutTotal;
     
-    @Column(name = "Date_fin", nullable = false)
+    @Column(name = "Nombre_Livreur", nullable = false)
     private Integer nombreLivreur;
+    
+    @OneToMany
+    private Collection <Shift> shift;
+    
     
 }
