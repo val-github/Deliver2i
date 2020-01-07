@@ -30,10 +30,9 @@ public class Test {
                 et.begin();
                 // creation d’une entite persistante
                 InstanceReader reader = new InstanceReader("instances/instance_test.csv");
-                reader.readInstance();
+                reader.readInstance(em);
 
-                System.out.println("=> Reader : " + reader.toString());
-                em.persist(reader);
+                System.out.println("=> Reader : " + reader);
                 et.commit();
             } 
             catch (Exception ex) 

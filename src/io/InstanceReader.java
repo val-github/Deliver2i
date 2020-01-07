@@ -19,6 +19,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Scanner;
+import javax.persistence.EntityManager;
 import modele.Instance;
 
 /**
@@ -62,10 +63,11 @@ public class InstanceReader {
     
     /**
      * Methoide principale pour lire le fichier d'instance.
+     * @param em
      * @throws ReaderException lorsque les donnees dans le fichier d'instance 
      * sont manquantes ou au mauvais format.
      */
-    public void readInstance() throws ReaderException {
+    public void readInstance(EntityManager em) throws ReaderException {
         Scanner scanner = null;
         try 
         {
@@ -85,7 +87,7 @@ public class InstanceReader {
         // TODO : Vous pouvez creer une instance.
         ////////////////////////////////////////////
         Instance instance = new Instance(name,dureeMin,dureeMax,date);
-        System.out.println("0   "+instance.toString());
+        em.persist(instance);
         
         
         readStringInLine(scanner, new String[]{"Debut", "Fin"});
@@ -116,9 +118,11 @@ public class InstanceReader {
             ////////////////////////////////////////////
             // TODO : Vous pouvez ajoutez chacune des tournees a votre instance
             ////////////////////////////////////////////
-            instance.listeTournee(elem.getDebut(), elem.getFin());
+            instance.listeTournee(elem.getDebut(), elem.getFin(),em);
+            
         }
         System.out.println(instance.toString());
+        em.persist(instance);
     }
 
     /**
@@ -308,7 +312,7 @@ public class InstanceReader {
         try 
         {
             InstanceReader reader = new InstanceReader("instances/instance_test.csv");
-            reader.readInstance();
+            //reader.readInstance(em);
             System.out.println("Instance lue avec success !");
         } 
         catch (ReaderException ex) 

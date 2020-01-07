@@ -6,17 +6,13 @@
 package modele;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -56,7 +52,7 @@ public class Tournee implements Serializable {
     
     
     
-    public Tournee(Date dateDebut, Date dateFin) {
+    public Tournee(Date dateDebut, Date dateFin, Instance i) {
         if(dateDebut.compareTo(dateFin) > 0)
         {
             this.horaireDebut = dateFin;
@@ -66,6 +62,10 @@ public class Tournee implements Serializable {
         {
             this.horaireDebut = dateDebut;
             this.horaireFin = dateFin;
+        }
+        if(instance!=null)
+        {
+            instance=i;
         }
     }
 

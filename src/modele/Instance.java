@@ -18,13 +18,13 @@ import java.util.LinkedList;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityManager;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.OneToMany;
-import static javax.swing.UIManager.getInt;
 
 /**
  *
@@ -80,10 +80,19 @@ public class Instance implements Serializable {
         tournees = new LinkedList<>(); // accepte les doublons et on se sais combien on a de tournees
     }
     
-    public boolean listeTournee(Date debut, Date fin)
+    public Integer getIdInstance() {
+        return idInstance;
+    }    
+    
+    public boolean listeTournee(Date debut, Date fin, EntityManager em)
     {
-        Tournee t = new Tournee(debut,fin);
-        return tournees.add(t)==true;
+        Tournee t = new Tournee(debut,fin,this);
+        em.persist(t);
+        if(tournees.add(t)==true)
+        {
+            return true;
+        }
+        return false;
     }
     
     private void connect() throws ClassNotFoundException, SQLException {
@@ -111,4 +120,5 @@ public class Instance implements Serializable {
     public String toString() {
         return "Instance{" + "idInstance=" + idInstance + ", nom=" + nom + ", dureeMin=" + dureeMin + ", dureeMax=" + dureeMax + ", date=" + date + ", tournees=" + tournees + '}';
     }
+
 }
