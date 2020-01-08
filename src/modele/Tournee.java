@@ -12,6 +12,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -37,20 +38,22 @@ public class Tournee implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date horaireFin;
     
+    /* ManyToOne : Instance */
+    /*@ManyToOne
+    @JoinColumn(name = "id_Instance", nullable = false)*/
+    private Instance instance;
+    
+    /* OneToOne :  Shift */
+    /*@ManyToOne
+    @JoinColumn(name = "id_Shift", nullable = false)
+    private Shift shift;*/
+    
     public Tournee() {
         this.horaireDebut = new Date(0,0,0,9,0);
         this.horaireFin = new Date(0,0,0,10,0);
-    }
-
-    /* ManyToOne :  Shift */
-    @ManyToOne
-    private Shift shift;
-    
-    /*ManyToOne : instance */
-    @ManyToOne
-    private Instance instance;
-    
-    
+        this.instance = new Instance();
+        //this.shift = new Shift();
+    }   
     
     public Tournee(Date dateDebut, Date dateFin, Instance i) {
         if(dateDebut.compareTo(dateFin) > 0)
@@ -63,12 +66,27 @@ public class Tournee implements Serializable {
             this.horaireDebut = dateDebut;
             this.horaireFin = dateFin;
         }
-        if(instance!=null)
+        if(i!=null)
         {
             instance=i;
         }
     }
 
+    public Date getHoraireDebut() {
+        return horaireDebut;
+    }
+
+    public Date getHoraireFin() {
+        return horaireFin;
+    }
+    
+    public void addShift(Shift s) {
+        if (s!=null)
+        {
+            //this.shift = s;
+        }
+    }
+    
     @Override
     public String toString() {
         return "\n\tTournee{" + "idTournee=" + idTournee + ", horaireDebut=" + horaireDebut.getHours() + ":" + horaireDebut.getMinutes() + ", horaireFin=" + horaireFin.getHours() + ":" + horaireFin.getMinutes() + '}';

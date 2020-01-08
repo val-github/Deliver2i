@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package projet;
+package vue;
 
 import java.awt.Color;
 import static java.awt.image.ImageObserver.ERROR;
@@ -25,10 +25,10 @@ public class AffichageInstance extends javax.swing.JFrame {
     private Instance In;
     
     public AffichageInstance() throws SQLException {
-        initComponents();
+        /*initComponents();
         initialisationFenetre();
         initConnexion();
-        AfficherInstance();
+        AfficherInstance();*/
     }
     
     private void initConnexion(){
@@ -50,7 +50,7 @@ public class AffichageInstance extends javax.swing.JFrame {
     }
     
     private void AfficherInstance() throws SQLException{
-        try 
+        /*try 
         {
             List<Instance> instance = this.In.ensInstance();
             DefaultListModel dlm = new DefaultListModel();
@@ -58,9 +58,9 @@ public class AffichageInstance extends javax.swing.JFrame {
             jListInstances.setModel(dlm);
         }
         catch (SQLException ex) 
-            {
+        {
             JOptionPane.showMessageDialog(this, ex, "Erreur", JOptionPane.ERROR_MESSAGE);
-            }
+        }*/
     }
     
     /**
@@ -134,12 +134,16 @@ public class AffichageInstance extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(AffichageInstance.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
-            try {
+            try 
+            {
                 new AffichageInstance().setVisible(true);
-            } catch (SQLException ex) {
+            } 
+            catch (SQLException ex) 
+            {
                 Logger.getLogger(AffichageInstance.class.getName()).log(Level.SEVERE, null, ex);
             }
         });

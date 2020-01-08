@@ -34,6 +34,17 @@ public class Test {
 
                 System.out.println("=> Reader : " + reader);
                 et.commit();
+                
+                for(int i=2;i<11;i++)
+                {
+                    et.begin();
+                    // creation d’une entite persistante
+                    InstanceReader reader1 = new InstanceReader("instances/instance_" + i + ".csv");
+                    reader1.readInstance(em);
+
+                    System.out.println("=> Reader : " + i);
+                    et.commit();
+                }
             } 
             catch (Exception ex) 
             {

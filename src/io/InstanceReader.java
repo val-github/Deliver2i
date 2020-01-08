@@ -23,13 +23,8 @@ import javax.persistence.EntityManager;
 import modele.Instance;
 
 /**
- * Classe qui permet de lire une instance pour le projet de POO3 2019/2020.
- * Le format des instances est decrit dans le sujet du projet.
- * Attention, ceci est un squellette de code, il faut le compléter.
- * Des commentaires contenant 'TODO' vous aident pour voir a quel endroit vous pouvez completer.
- * N'hésitez pas a apporter toutes les modifications que vous jugez utiles.
- * 
- * @author Maxime Ogier
+ *
+ * @author Gwendoline
  */
 public class InstanceReader {
     /**
@@ -63,7 +58,6 @@ public class InstanceReader {
     
     /**
      * Methoide principale pour lire le fichier d'instance.
-     * @param em
      * @throws ReaderException lorsque les donnees dans le fichier d'instance 
      * sont manquantes ou au mauvais format.
      */
@@ -88,7 +82,6 @@ public class InstanceReader {
         ////////////////////////////////////////////
         Instance instance = new Instance(name,dureeMin,dureeMax,date);
         em.persist(instance);
-        
         
         readStringInLine(scanner, new String[]{"Debut", "Fin"});
         // Dans la boucle qui suit, nous allons lire les donnees relatives a chaque tournee.
@@ -118,10 +111,13 @@ public class InstanceReader {
             ////////////////////////////////////////////
             // TODO : Vous pouvez ajoutez chacune des tournees a votre instance
             ////////////////////////////////////////////
-            instance.listeTournee(elem.getDebut(), elem.getFin(),em);
-            
+            instance.listeTournee(elem.getDebut(), elem.getFin());
+            //instance.listeTournee(elem.getDebut(), elem.getFin(),em);
         }
         System.out.println(instance.toString());
+        //instance.creationShift(em);
+        /*instance.creationShift();
+        instance.persist(em);*/
         em.persist(instance);
     }
 
@@ -312,7 +308,7 @@ public class InstanceReader {
         try 
         {
             InstanceReader reader = new InstanceReader("instances/instance_test.csv");
-            //reader.readInstance(em);
+            //reader.readInstance();
             System.out.println("Instance lue avec success !");
         } 
         catch (ReaderException ex) 

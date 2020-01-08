@@ -24,7 +24,7 @@ import javax.persistence.TemporalType;
 
 /**
  *
- * @author Val
+ * @author Gwendoline
  */
 @Entity
 public class Shift implements Serializable {
@@ -49,9 +49,13 @@ public class Shift implements Serializable {
     @Column(name = "Temps_mort", nullable = false)
     private Float tempsMort;
     
-    /*OneToMany : tournée    */
-    @OneToMany(mappedBy="")
-    private Collection <Tournee> tournees;
+    /* ManyToOne : Tounees */
+    /*@OneToMany(mappedBy="shift")
+    private List<Tournee> tournees;*/
+    
+    /*@ManyToOne
+    @JoinColumn(name="id_Solution")
+    private Solution solution;*/
     
     ///ATTENTION CONDITION !!!!
     public Shift() {
@@ -59,7 +63,8 @@ public class Shift implements Serializable {
         this.horaireFin = new Date(0,0,0,10,0);
         this.duree = Duree(horaireDebut,horaireFin);
         this.tempsMort = TempsMort();
-        tournees = new LinkedList<>();
+        //tournees = new LinkedList<>();
+        //this.solution = new Solution();
     }
     
     public Shift(Date horaireDebut, Date horaireFin) {
@@ -67,7 +72,32 @@ public class Shift implements Serializable {
         this.horaireFin = horaireFin;
         this.duree = Duree(horaireDebut,horaireFin);
         this.tempsMort = TempsMort();
-        tournees = new LinkedList<>();
+        //tournees = new LinkedList<>();
+        //this.solution = new Solution();
+    }
+    
+    /*public void addTournee(Tournee t)
+    {
+        if(t != null)
+        {
+            tournees.add(t); 
+        }
+        t.addShift(this);
+        Duree(tournees.get(0).getHoraireDebut(),tournees.get(tournees.size()-1).getHoraireFin());
+        TempsMort();
+    }*/
+    
+    /**
+     * 
+     * @return float
+     * 
+     * Cette fonction calcul le temps mort du Shift
+     * tm(s) = max {Tmin; dur(s)} − Somme(t∈T)(fin du shift − debut du shift)
+     */
+    private Float TempsMort()
+    {
+        
+        return duree;
     }
     
     /**
@@ -93,24 +123,21 @@ public class Shift implements Serializable {
         return dureeFinale;
     }
    
-    /**
-     * 
-     * @return float
-     * 
-     * Cette fonction calcul le temps mort du Shift
-     * tm(s) = max {Tmin; dur(s)} − Somme(t∈T)(fin du shift − debut du shift)
-     */
-    private Float TempsMort()
-    {
-        
-        return duree;
+    @Override
+    public String toString() {
+        return "Shift{" + "idShift=" + idShift + ", horaireDebut=" + horaireDebut.getHours() + ":" + horaireDebut.getMinutes() + ", horaireFin=" + horaireFin.getHours() + ":" + horaireFin.getMinutes() + ", duree=" + duree + ", tempsMort=" + tempsMort/* + ", tournees=" + tournees*/ + '}';
     }
     
     public static void main(String[] args) {
-        /*Date debut = new Date(0,0,0,10,0);
-        Date fin = new Date(0,0,0,11,10);
+        //Date debut = new Date(0,0,0,10,0);
+        //Date fin = new Date(0,0,0,11,10);
         
         Shift s = new Shift();
-        s.Duree(debut,fin);*/
+        //s.Duree(debut,fin);
+        System.out.println(s.toString());
+        
+        
+        //Tournee t = new Tournee();
+        //s.addTournee(t);
     }
 }
