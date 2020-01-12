@@ -12,7 +12,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Connection;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -28,7 +27,7 @@ import javax.persistence.OneToMany;
 
 /**
  *
- * @author Val
+ * @author Gwendoline
  */
 @Entity
 public class Instance implements Serializable {
@@ -55,14 +54,11 @@ public class Instance implements Serializable {
     private Date date;
     
     /* OneToMany : tournée */
-    @OneToMany(mappedBy="Id_Instance")
-    private Collection <Tournee> tournees;
+    /*@OneToMany(mappedBy="instance")*/
+    private List<Tournee> tournees;
     
-    public static Instance getInstance() throws ClassNotFoundException, SQLException{
-        if(instance == null)
-            instance = new Instance();
-        return instance;
-    }
+    /*@OneToOne//(mappedBy="instance")
+    private Solution solution;*/
 
     public Instance() {
         this.nom = "";
@@ -70,6 +66,7 @@ public class Instance implements Serializable {
         this.dureeMax = 0;
         this.date = new Date(0,0,0,0,0);
         tournees = new LinkedList<>();// accepte les doublons et on se sais combien on a de tournees
+        //this.solution = new Solution();
     }
 
     public Instance(String nom, Integer dureeMin, Integer dureeMax, Date date) {
@@ -78,16 +75,40 @@ public class Instance implements Serializable {
         this.dureeMax = dureeMax;
         this.date = date;
         tournees = new LinkedList<>(); // accepte les doublons et on se sais combien on a de tournees
+        // this.solution = new Solution();
+    }
+    
+    public static Instance getInstance() throws ClassNotFoundException, SQLException{
+        if(instance == null)
+            instance = new Instance();
+        return instance;
     }
     
     public Integer getIdInstance() {
         return idInstance;
     }    
     
-    public boolean listeTournee(Date debut, Date fin, EntityManager em)
+    
+    /*public void creationShift(EntityManager em)
+    {
+        //em.persist(solution);
+        for(Tournee t : tournees)
+        {
+            Shift s = new Shift();
+            //s.addTournee(t);
+            creationSolution(s);
+        } 
+    }*/
+    
+    private void creationSolution(Shift s)
+    {
+        //solution.addShift(s);
+    }
+    
+    public boolean listeTournee(Date debut, Date fin)//, EntityManager em)
     {
         Tournee t = new Tournee(debut,fin,this);
-        em.persist(t);
+        //em.persist(t);
         if(tournees.add(t)==true)
         {
             return true;
@@ -95,7 +116,8 @@ public class Instance implements Serializable {
         return false;
     }
     
-    private void connect() throws ClassNotFoundException, SQLException {
+    // ATTENTION CA NE MARCHE QU'AVEC TA BASE DE DONNEE
+    /*private void connect() throws ClassNotFoundException, SQLException {
         String driverClass = "org.apache.derby.jdbc.ClientDriver";
         String urlDatabase = "jdbc:derby://localhost:1527/Projet";
         String user = "val";
@@ -114,7 +136,7 @@ public class Instance implements Serializable {
             }
         }
         return instances;
-    }
+    }*/
 
     @Override
     public String toString() {

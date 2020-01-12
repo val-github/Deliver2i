@@ -6,6 +6,8 @@
 package modele;
 
 import java.io.Serializable;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Collection;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,10 +15,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 
 /**
  *
- * @author Val
+ * @author Gwendoline
  */
 @Entity
 public class Solution implements Serializable {
@@ -33,6 +37,39 @@ public class Solution implements Serializable {
     @Column(name = "Nombre_Livreur", nullable = false)
     private Integer nombreLivreur;
     
+    /*@OneToOne
+    //@JoinColumn(name="id_Instance")
+    private Instance instance;
+    
+    @OneToMany(mappedBy="solution")
+    private List<Shift> shift;*/
+
+    public Solution() {
+        this.coutTotal = 0f;
+        this.nombreLivreur = 0;
+        //this.shift=new LinkedList<>();
+    }
+    
+    public void addShift(Shift s) {
+        if(s != null)
+        {
+            //shift.add(s);
+        }
+        coutTotal();
+        nombreLivreur();
+    }
+
+    private void coutTotal() {
+        float cout = 0;
+        
+        this.coutTotal = cout;
+    }
+    
+    private void nombreLivreur() {
+        int livreur = 0;
+        
+        this.nombreLivreur = livreur;
+    }
     @OneToMany
     private Collection <Shift> shift;
     
