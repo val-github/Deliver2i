@@ -21,6 +21,7 @@ import java.util.Date;
 import java.util.Scanner;
 import javax.persistence.EntityManager;
 import modele.Instance;
+import vue.AffichageInstance;
 
 /**
  *
@@ -61,7 +62,7 @@ public class InstanceReader {
      * @throws ReaderException lorsque les donnees dans le fichier d'instance 
      * sont manquantes ou au mauvais format.
      */
-    public void readInstance(EntityManager em) throws ReaderException {
+    public void readInstance(AffichageInstance fenetre, EntityManager em) throws ReaderException {
         Scanner scanner = null;
         try 
         {

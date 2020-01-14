@@ -5,63 +5,59 @@
  */
 package vue;
 
-import java.awt.Color;
-import static java.awt.image.ImageObserver.ERROR;
-import java.sql.SQLException;
-import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.DefaultListModel;
-import javax.swing.JOptionPane;
-import modele.Instance;
-
+import modele.*;
 
 /**
  *
- * @author Val
+ * @author Gwendoline
  */
 public class AffichageInstance extends javax.swing.JFrame {
-    
-    private Instance In;
-    
-    public AffichageInstance() throws SQLException {
-        /*initComponents();
-        initialisationFenetre();
-        initConnexion();
-        AfficherInstance();*/
+
+    /**
+     * Creates new form AffichageInstance
+     */
+    public AffichageInstance() {
+        initComponents();
     }
     
-    private void initConnexion(){
-        /*try {
-            this.In = Instance.getInstance();
-        } 
-        catch (Exception ex) {
-            System.out.println("erreur: " + ex);
-            JOptionPane.showMessageDialog(this, ex, "Erreur", ERROR);
-        } */
-     }
-    
-    private void initialisationFenetre() {
+    private void ajoutInstance(Instance i)
+    {
         
-        this.setVisible(true);
-        this.setTitle("Instance");
-        this.setLocationRelativeTo(null);
-        this.getContentPane().setBackground(Color.WHITE);
     }
     
-    private void AfficherInstance() throws SQLException{
-        /*try 
-        {
-            List<Instance> instance = this.In.ensInstance();
-            DefaultListModel dlm = new DefaultListModel();
-            instance.forEach(dlm::addElement);
-            jListInstances.setModel(dlm);
-        }
-        catch (SQLException ex) 
-        {
-            JOptionPane.showMessageDialog(this, ex, "Erreur", JOptionPane.ERROR_MESSAGE);
-        }*/
+    private void ajoutShift(Shift s)
+    {
+        
     }
+    
+    private void ajoutTournee(Tournee t)
+    {
+        
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -72,21 +68,29 @@ public class AffichageInstance extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        instances = new javax.swing.JComboBox<>();
+        shifts = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jListInstances = new javax.swing.JList<>();
+        tournees = new javax.swing.JList<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Instances");
+        setTitle("PROJET");
+        setBackground(new java.awt.Color(175, 175, 175));
+        setName(""); // NOI18N
 
-        jListInstances.setModel(new javax.swing.AbstractListModel<String>() {
+        instances.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        instances.setName(""); // NOI18N
+
+        shifts.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        shifts.setName(""); // NOI18N
+
+        tournees.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
-        jListInstances.setToolTipText("Instances");
-        jListInstances.setName("Instances"); // NOI18N
-        jScrollPane1.setViewportView(jListInstances);
-        jListInstances.getAccessibleContext().setAccessibleName("");
+        tournees.setName(""); // NOI18N
+        jScrollPane1.setViewportView(tournees);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -94,63 +98,75 @@ public class AffichageInstance extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(instances, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(shifts, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(instances, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(shifts, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(33, 33, 33)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(26, Short.MAX_VALUE))
         );
+
+        getAccessibleContext().setAccessibleDescription("");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void main(String args[]) 
+    {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
         try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) 
+            {
+                if ("Nimbus".equals(info.getName())) 
+                {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
+        } 
+        catch (ClassNotFoundException ex) {
             java.util.logging.Logger.getLogger(AffichageInstance.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
+        } 
+        catch (InstantiationException ex) {
             java.util.logging.Logger.getLogger(AffichageInstance.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
+        } 
+        catch (IllegalAccessException ex) {
             java.util.logging.Logger.getLogger(AffichageInstance.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } 
+        catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(AffichageInstance.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> {
-            try 
-            {
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
                 new AffichageInstance().setVisible(true);
-            } 
-            catch (SQLException ex) 
-            {
-                Logger.getLogger(AffichageInstance.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JList<String> jListInstances;
+    private javax.swing.JComboBox<String> instances;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JComboBox<String> shifts;
+    private javax.swing.JList<String> tournees;
     // End of variables declaration//GEN-END:variables
 }
