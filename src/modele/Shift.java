@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 import java.util.LinkedList;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -42,25 +43,24 @@ public class Shift implements Serializable {
     private Date horaireFin; //f
     
     @Column(name = "Duree", nullable = false)
-    private Float duree;
+    private Date duree;
     
     @Column(name = "Temps_mort", nullable = false)
-    private Float tempsMort;
+    public Date tempsMort;
     
     /* ManyToOne : Tounees */
-    /*@OneToMany(mappedBy="shift")
-    private List<Tournee> tournees;*/
+    @OneToMany(mappedBy="shift")
+    private List<Tournee> tournees;
     
-    /*@ManyToOne
-    @JoinColumn(name="id_Solution")
-    private Solution solution;*/
+    @ManyToOne
+    private Solution solution;
     
     ///ATTENTION CONDITION !!!!
     public Shift() {
         this.horaireDebut = new Date(0,0,0,9,0);
         this.horaireFin = new Date(0,0,0,10,0);
-        this.duree = Duree(horaireDebut,horaireFin);
-        this.tempsMort = TempsMort();
+        Duree(horaireDebut,horaireFin);
+        TempsMort();
         //tournees = new LinkedList<>();
         //this.solution = new Solution();
     }
@@ -68,22 +68,20 @@ public class Shift implements Serializable {
     public Shift(Date horaireDebut, Date horaireFin) {
         this.horaireDebut = horaireDebut;
         this.horaireFin = horaireFin;
-        this.duree = Duree(horaireDebut,horaireFin);
-        this.tempsMort = TempsMort();
+        Duree(horaireDebut,horaireFin);
+        TempsMort();
         //tournees = new LinkedList<>();
         //this.solution = new Solution();
     }
     
-    /*public void addTournee(Tournee t)
+    public void ajoutShiftSol(Solution sol)
     {
-        if(t != null)
+        if(sol!= null)
         {
-            tournees.add(t); 
+            this.solution = sol;
         }
-        t.addShift(this);
-        Duree(tournees.get(0).getHoraireDebut(),tournees.get(tournees.size()-1).getHoraireFin());
-        TempsMort();
-    }*/
+        
+    }
     
     /**
      * 
@@ -92,10 +90,29 @@ public class Shift implements Serializable {
      * Cette fonction calcul le temps mort du Shift
      * tm(s) = max {Tmin; dur(s)} − Somme(t∈T)(fin du shift − debut du shift)
      */
-    private Float TempsMort()
+    private void TempsMort()
     {
-        
-        return duree;
+        Date tm,dureeT = null;
+        List<Tournee> tourn;
+        tourn= new LinkedList<>();
+        tourn=this.tournees;
+        for (Tournee t : tourn)
+        {
+            Date d = new Date(0,0,0,t.horaireFin.getHours()-t.horaireDebut.getHours(),t.horaireFin.getMinutes()-t.horaireDebut.getMinutes());
+            int H,M;
+            H=dureeT.getHours()+d.getHours();
+            M=dureeT.getMinutes()+d.getMinutes();
+            if(M>60)
+            {
+                int H1=M/60;
+                int M1=M%60;
+                dureeT = new Date(0,0,0,H+H1,M1);
+            }else{
+                dureeT= new Date(0,0,0,H,M);
+            }
+        }
+        tm=new Date(0,0,0,this.duree.getHours()-dureeT.getHours(),this.duree.getMinutes()-dureeT.getMinutes());
+        this.tempsMort=tm;
     }
     
     /**
@@ -107,18 +124,10 @@ public class Shift implements Serializable {
      * Cette fonction calcule la duree du Shift
      * duree = fin du shift - debut du shift
      */
-    private Float Duree(Date debut,Date fin)
+    private void Duree(Date debut,Date fin)
     {
-        float dureeFinale=0;   
-        
         Date nouv = new Date(0,0,0,fin.getHours()-debut.getHours(),fin.getMinutes()-debut.getMinutes());
-        
-        int heure = nouv.getHours();        
-        float minute = nouv.getMinutes();
-        minute = minute/60;
-        
-        dureeFinale = heure + minute;
-        return dureeFinale;
+        this.duree=nouv;
     }
    
     @Override

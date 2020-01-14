@@ -32,21 +32,20 @@ public class Tournee implements Serializable {
 
     @Column(name = "Horaire_debut", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
-    private Date horaireDebut;
+    public Date horaireDebut;
     
     @Column(name = "Horaire_fin", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
-    private Date horaireFin;
+    public Date horaireFin;
     
     /* ManyToOne : Instance */
-    /*@ManyToOne
-    @JoinColumn(name = "id_Instance", nullable = false)*/
+    @ManyToOne
     private Instance instance;
+
     
-    /* OneToOne :  Shift */
-    /*@ManyToOne
-    @JoinColumn(name = "id_Shift", nullable = false)
-    private Shift shift;*/
+    /* ManyToOne :  Shift */
+    @ManyToOne
+    private Shift shift;
     
     public Tournee() {
         this.horaireDebut = new Date(0,0,0,9,0);
@@ -80,10 +79,10 @@ public class Tournee implements Serializable {
         return horaireFin;
     }
     
-    public void addShift(Shift s) {
+    public void ajoutTourneeShift(Shift s) {
         if (s!=null)
         {
-            //this.shift = s;
+            this.shift = s;
         }
     }
     

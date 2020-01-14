@@ -89,20 +89,23 @@ public class Instance implements Serializable {
     }    
     
     
-    /*public void creationShift(EntityManager em)
+    public void creationShift(EntityManager em)
     {
-        //em.persist(solution);
+        
         for(Tournee t : tournees)
         {
             Shift s = new Shift();
-            //s.addTournee(t);
+            s.addTournee(t);
             creationSolution(s);
         } 
-    }*/
+        em.persist();
+    }
     
     private void creationSolution(Shift s)
     {
-        //solution.addShift(s);
+        Solution sol;
+        sol=new Solution();
+        sol.addShift(s);
     }
     
     public boolean listeTournee(Date debut, Date fin)//, EntityManager em)
@@ -143,4 +146,5 @@ public class Instance implements Serializable {
         return "Instance{" + "idInstance=" + idInstance + ", nom=" + nom + ", dureeMin=" + dureeMin + ", dureeMax=" + dureeMax + ", date=" + date + ", tournees=" + tournees + '}';
     }
 
+    
 }
