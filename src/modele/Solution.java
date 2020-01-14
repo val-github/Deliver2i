@@ -34,27 +34,36 @@ public class Solution implements Serializable {
     
     @Column(name = "Date_fin", nullable = false)
     private Integer nombreLivreur;
-    
-    /*@OneToOne
-    //@JoinColumn(name="id_Instance")
-    private Instance instance;
-    
-    @OneToMany(mappedBy="solution")
-    private List<Shift> shift;*/
 
+    @OneToOne
+    private Instance instance;
+
+    @OneToMany
+    private List<Shift> shifts;
+    
     public Solution() {
         this.coutTotal = 0f;
         this.nombreLivreur = 0;
-        //this.shift=new LinkedList<>();
+        this.shifts = new LinkedList<>();       
     }
     
+     public Solution(Instance i) {
+        this.coutTotal = 0f;
+        this.nombreLivreur = 0;
+        instance = i;
+        this.shifts = new LinkedList<>();        
+    }
+     
     public void addShift(Shift s) {
+        
         if(s != null)
         {
-            //shift.add(s);
-        }
-        coutTotal();
-        nombreLivreur();
+            if(shifts.add(s)==true)
+            {
+                coutTotal();
+                nombreLivreur();
+            }
+        } 
     }
 
     private void coutTotal() {

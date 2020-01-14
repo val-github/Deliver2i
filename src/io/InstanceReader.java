@@ -81,7 +81,6 @@ public class InstanceReader {
         // TODO : Vous pouvez creer une instance.
         ////////////////////////////////////////////
         Instance instance = new Instance(name,dureeMin,dureeMax,date);
-        em.persist(instance);
         
         readStringInLine(scanner, new String[]{"Debut", "Fin"});
         // Dans la boucle qui suit, nous allons lire les donnees relatives a chaque tournee.
@@ -111,13 +110,10 @@ public class InstanceReader {
             ////////////////////////////////////////////
             // TODO : Vous pouvez ajoutez chacune des tournees a votre instance
             ////////////////////////////////////////////
-            instance.listeTournee(elem.getDebut(), elem.getFin());
-            //instance.listeTournee(elem.getDebut(), elem.getFin(),em);
+            //instance.listeTournee(elem.getDebut(), elem.getFin());
+            instance.listeTournee(elem.getDebut(), elem.getFin(),em);
         }
-        System.out.println(instance.toString());
-        //instance.creationShift(em);
-        /*instance.creationShift();
-        instance.persist(em);*/
+        instance.creationShift(em);
         em.persist(instance);
     }
 

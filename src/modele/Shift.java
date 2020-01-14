@@ -49,13 +49,8 @@ public class Shift implements Serializable {
     @Column(name = "Temps_mort", nullable = false)
     private Float tempsMort;
     
-    /* ManyToOne : Tounees */
-    /*@OneToMany(mappedBy="shift")
-    private List<Tournee> tournees;*/
-    
-    /*@ManyToOne
-    @JoinColumn(name="id_Solution")
-    private Solution solution;*/
+    @OneToMany
+    private List<Tournee> tournees;
     
     ///ATTENTION CONDITION !!!!
     public Shift() {
@@ -63,8 +58,7 @@ public class Shift implements Serializable {
         this.horaireFin = new Date(0,0,0,10,0);
         this.duree = Duree(horaireDebut,horaireFin);
         this.tempsMort = TempsMort();
-        //tournees = new LinkedList<>();
-        //this.solution = new Solution();
+        this.tournees = new LinkedList<>();
     }
     
     public Shift(Date horaireDebut, Date horaireFin) {
@@ -72,20 +66,24 @@ public class Shift implements Serializable {
         this.horaireFin = horaireFin;
         this.duree = Duree(horaireDebut,horaireFin);
         this.tempsMort = TempsMort();
-        //tournees = new LinkedList<>();
-        //this.solution = new Solution();
+        this.tournees = new LinkedList<>();
     }
     
-    /*public void addTournee(Tournee t)
+    public boolean addTournee(Tournee t)
     {
-        if(t != null)
+        if(t!=null)
         {
-            tournees.add(t); 
+            if(tournees.add(t)==true)
+            {
+                horaireDebut=tournees.get(0).getHoraireDebut();
+                horaireFin=tournees.get(tournees.size()-1).getHoraireFin();
+                duree=Duree(horaireDebut,horaireFin);
+                tempsMort=TempsMort();
+                return true;
+            }
         }
-        t.addShift(this);
-        Duree(tournees.get(0).getHoraireDebut(),tournees.get(tournees.size()-1).getHoraireFin());
-        TempsMort();
-    }*/
+        return false;
+    }
     
     /**
      * 
@@ -126,18 +124,5 @@ public class Shift implements Serializable {
     @Override
     public String toString() {
         return "Shift{" + "idShift=" + idShift + ", horaireDebut=" + horaireDebut.getHours() + ":" + horaireDebut.getMinutes() + ", horaireFin=" + horaireFin.getHours() + ":" + horaireFin.getMinutes() + ", duree=" + duree + ", tempsMort=" + tempsMort/* + ", tournees=" + tournees*/ + '}';
-    }
-    
-    public static void main(String[] args) {
-        //Date debut = new Date(0,0,0,10,0);
-        //Date fin = new Date(0,0,0,11,10);
-        
-        Shift s = new Shift();
-        //s.Duree(debut,fin);
-        System.out.println(s.toString());
-        
-        
-        //Tournee t = new Tournee();
-        //s.addTournee(t);
     }
 }
