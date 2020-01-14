@@ -32,13 +32,13 @@ public class AffichageInstance extends javax.swing.JFrame {
     }
     
     private void initConnexion(){
-        try {
+        /*try {
             this.In = Instance.getInstance();
         } 
         catch (Exception ex) {
             System.out.println("erreur: " + ex);
             JOptionPane.showMessageDialog(this, ex, "Erreur", ERROR);
-        } 
+        } */
      }
     
     private void initialisationFenetre() {

@@ -6,12 +6,6 @@
 package modele;
 
 import java.io.Serializable;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.sql.Connection;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -32,9 +26,7 @@ import javax.persistence.OneToMany;
 @Entity
 public class Instance implements Serializable {
 
-    private Connection connection;
     private static final long serialVersionUID = 1L;
-    private static Instance instance;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column (name="Id_Instance")
@@ -53,12 +45,8 @@ public class Instance implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;
     
-    /* OneToMany : tournée */
-    /*@OneToMany(mappedBy="instance")*/
+    @OneToMany
     private List<Tournee> tournees;
-    
-    /*@OneToOne//(mappedBy="instance")
-    private Solution solution;*/
 
     public Instance() {
         this.nom = "";
@@ -66,7 +54,6 @@ public class Instance implements Serializable {
         this.dureeMax = 0;
         this.date = new Date(0,0,0,0,0);
         tournees = new LinkedList<>();// accepte les doublons et on se sais combien on a de tournees
-        //this.solution = new Solution();
     }
 
     public Instance(String nom, Integer dureeMin, Integer dureeMax, Date date) {
@@ -75,10 +62,44 @@ public class Instance implements Serializable {
         this.dureeMax = dureeMax;
         this.date = date;
         tournees = new LinkedList<>(); // accepte les doublons et on se sais combien on a de tournees
-        // this.solution = new Solution();
+    }   
+    
+    public boolean listeTournee(Date debut, Date fin, EntityManager em)
+    {
+        Tournee t = new Tournee(debut,fin);
+        em.persist(t);
+        if(tournees.add(t)==true)
+        {
+            return true;
+        }
+        return false;
     }
     
-    public static Instance getInstance() throws ClassNotFoundException, SQLException{
+     public void creationShift(EntityManager em) //Solution triviale
+    {
+        Solution sol = new Solution(this);
+        for(Tournee t : tournees)
+        {
+            Shift s = new Shift();
+            s.addTournee(t);
+            creationSolution(sol,s);
+            em.persist(s);
+        }
+        em.persist(sol);
+    }
+    
+    public void creationSolution(Solution sol,Shift s)
+    {
+        if(sol!=null)
+        {
+            if(s!=null)
+            {
+                sol.addShift(s);
+            }
+        }
+    }
+    
+    /* public static Instance getInstance() throws ClassNotFoundException, SQLException{
         if(instance == null)
             instance = new Instance();
         return instance;
@@ -86,38 +107,7 @@ public class Instance implements Serializable {
     
     public Integer getIdInstance() {
         return idInstance;
-    }    
-    
-    
-    public void creationShift(EntityManager em)
-    {
-        
-        for(Tournee t : tournees)
-        {
-            Shift s = new Shift();
-            s.addTournee(t);
-            creationSolution(s);
-        } 
-        em.persist();
-    }
-    
-    private void creationSolution(Shift s)
-    {
-        Solution sol;
-        sol=new Solution();
-        sol.addShift(s);
-    }
-    
-    public boolean listeTournee(Date debut, Date fin)//, EntityManager em)
-    {
-        Tournee t = new Tournee(debut,fin,this);
-        //em.persist(t);
-        if(tournees.add(t)==true)
-        {
-            return true;
-        }
-        return false;
-    }
+    }*/  
     
     // ATTENTION CA NE MARCHE QU'AVEC TA BASE DE DONNEE
     /*private void connect() throws ClassNotFoundException, SQLException {
@@ -143,7 +133,7 @@ public class Instance implements Serializable {
 
     @Override
     public String toString() {
-        return "Instance{" + "idInstance=" + idInstance + ", nom=" + nom + ", dureeMin=" + dureeMin + ", dureeMax=" + dureeMax + ", date=" + date + ", tournees=" + tournees + '}';
+        return "Instance{" + "idInstance=" + idInstance + ", nom=" + nom + ", dureeMin=" + dureeMin + ", dureeMax=" + dureeMax + ", date=" + date + /*", tournees=" + tournees + */'}';
     }
 
     
