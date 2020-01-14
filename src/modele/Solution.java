@@ -47,13 +47,13 @@ public class Solution implements Serializable {
     private List<Shift> shifts;
     
     public Solution() {
-        this.coutTotal = 0f;
+        this.tempsMort = null;
         this.nombreLivreur = 0;
         this.shifts = new LinkedList<>();       
     }
     
      public Solution(Instance i) {
-        this.coutTotal = 0f;
+        this.tempsMort = null;
         this.nombreLivreur = 0;
         instance = i;
         this.shifts = new LinkedList<>();        
@@ -65,8 +65,8 @@ public class Solution implements Serializable {
         {
             if(shifts.add(s)==true)
             {
-                coutTotal();
-                nombreLivreur();
+                tempsMort();
+                nombreLivreurs();
             }
         } 
     }
@@ -86,7 +86,7 @@ public class Solution implements Serializable {
     
     private float nombreLivreurs()
     {
-        return this.shift.size();
+        return this.shifts.size();
     }
     
     private void tempsMort()
@@ -94,7 +94,7 @@ public class Solution implements Serializable {
         Date tm=null;
         List<Shift> shif;
         shif= new LinkedList<>();
-        shif=this.shift;
+        shif=this.shifts;
         for (Shift s : shif)
         {
             Date tm1=new Date(0,0,0,s.tempsMort.getHours(),s.tempsMort.getMinutes());

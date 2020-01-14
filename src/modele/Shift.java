@@ -82,8 +82,8 @@ public class Shift implements Serializable {
             {
                 horaireDebut=tournees.get(0).getHoraireDebut();
                 horaireFin=tournees.get(tournees.size()-1).getHoraireFin();
-                duree=Duree(horaireDebut,horaireFin);
-                tempsMort=TempsMort();
+                Duree(horaireDebut,horaireFin);
+                TempsMort();
                 return true;
             }
         }
@@ -95,7 +95,7 @@ public class Shift implements Serializable {
      * @return float
      * 
      * Cette fonction calcul le temps mort du Shift
-     * tm(s) = max {Tmin; dur(s)} − Somme(t∈T)(fin du shift − debut du shift)
+     * tm(s) = max {Tmin; dur(s)} âˆ’ Somme(tâˆˆT)(fin du shift âˆ’ debut du shift)
      */
     private void TempsMort()
     {
