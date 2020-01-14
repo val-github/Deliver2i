@@ -106,4 +106,5 @@ public class Instance implements Serializable {
         return "Instance{" + "idInstance=" + idInstance + ", nom=" + nom + ", dureeMin=" + dureeMin + ", dureeMax=" + dureeMax + ", date=" + date + /*", tournees=" + tournees + */'}';
     }
 
+    
 }

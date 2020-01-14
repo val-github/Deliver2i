@@ -8,6 +8,8 @@ package modele;
 import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Collection;
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,6 +17,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
@@ -29,10 +34,10 @@ public class Solution implements Serializable {
     @Column (name="Id_Solution")
     private Integer idSolution;
 
-    @Column(name = "Cout_Total", nullable = false)
-    private Float coutTotal;
+    @Column(name = "Temps_Mort", nullable = false)
+    private Date tempsMort;
     
-    @Column(name = "Date_fin", nullable = false)
+    @Column(name = "Nombre_Livreur", nullable = false)
     private Integer nombreLivreur;
 
     @OneToOne
@@ -65,7 +70,7 @@ public class Solution implements Serializable {
             }
         } 
     }
-
+    /*
     private void coutTotal() {
         float cout = 0;
         
@@ -76,5 +81,36 @@ public class Solution implements Serializable {
         int livreur = 0;
         
         this.nombreLivreur = livreur;
+    }*/
+    //fonction permettant de calculer le temps mort total de la solution
+    
+    private float nombreLivreurs()
+    {
+        return this.shift.size();
     }
+    
+    private void tempsMort()
+    {
+        Date tm=null;
+        List<Shift> shif;
+        shif= new LinkedList<>();
+        shif=this.shift;
+        for (Shift s : shif)
+        {
+            Date tm1=new Date(0,0,0,s.tempsMort.getHours(),s.tempsMort.getMinutes());
+            int H,M;
+            H=tm.getHours()+tm1.getHours();
+            M=tm.getMinutes()+tm1.getMinutes();
+            if(M>60)
+            {
+                int H1=M/60;
+                int M1=M%60;
+                tm= new Date(0,0,0,H+H1,M1);
+            }else{
+                tm= new Date(0,0,0,H,M);
+            }
+        }
+        this.tempsMort=tm;
+    }
+    
 }

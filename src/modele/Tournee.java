@@ -30,11 +30,11 @@ public class Tournee implements Serializable {
 
     @Column(name = "Horaire_debut", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
-    private Date horaireDebut;
+    public Date horaireDebut;
     
     @Column(name = "Horaire_fin", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
-    private Date horaireFin;
+    public Date horaireFin;
     
     public Tournee() {
         this.horaireDebut = new Date(0,0,0,9,0);
