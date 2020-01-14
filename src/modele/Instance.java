@@ -75,7 +75,7 @@ public class Instance implements Serializable {
         return false;
     }
     
-     public void creationShift(EntityManager em) //Solution triviale
+    public void creationShift(EntityManager em) //Solution triviale
     {
         Solution sol = new Solution(this);
         for(Tournee t : tournees)
@@ -88,7 +88,7 @@ public class Instance implements Serializable {
         em.persist(sol);
     }
     
-    public void creationSolution(Solution sol,Shift s)
+    private void creationSolution(Solution sol,Shift s)
     {
         if(sol!=null)
         {
@@ -99,37 +99,7 @@ public class Instance implements Serializable {
         }
     }
     
-    /* public static Instance getInstance() throws ClassNotFoundException, SQLException{
-        if(instance == null)
-            instance = new Instance();
-        return instance;
-    }
     
-    public Integer getIdInstance() {
-        return idInstance;
-    }*/  
-    
-    // ATTENTION CA NE MARCHE QU'AVEC TA BASE DE DONNEE
-    /*private void connect() throws ClassNotFoundException, SQLException {
-        String driverClass = "org.apache.derby.jdbc.ClientDriver";
-        String urlDatabase = "jdbc:derby://localhost:1527/Projet";
-        String user = "val";
-        String pwd = "100898";
-        Class.forName(driverClass);
-        connection = DriverManager.getConnection(urlDatabase, user, pwd);
-    }
-    
-    public List<Instance> ensInstance () throws SQLException {
-        List<Instance> instances = new ArrayList<>();
-        String requete = "SELECT * from instance";
-        try (Statement stmt = connection.createStatement(); ResultSet res = stmt.executeQuery(requete)) {
-            while (res.next()) {
-                Instance inst = new Instance(res.getString("nom"), res.getInt("dureeMin"), res.getInt("dureeMax"), res.getDate("date"));
-                instances.add(inst);
-            }
-        }
-        return instances;
-    }*/
 
     @Override
     public String toString() {

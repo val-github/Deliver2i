@@ -10,6 +10,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import vue.AffichageInstance;
 
 /**
  *
@@ -27,10 +28,12 @@ public class Test {
             final EntityTransaction et = em.getTransaction();
             try
             {
+                AffichageInstance fenetre = new AffichageInstance();
+                fenetre.setVisible(true);
                 et.begin();
                 // creation d’une entite persistante
                 InstanceReader reader = new InstanceReader("instances/instance_test.csv");
-                reader.readInstance(em);
+                reader.readInstance(fenetre,em);
 
                 System.out.println("=> Reader : " + reader);
                 et.commit();
@@ -40,7 +43,7 @@ public class Test {
                     et.begin();
                     // creation d’une entite persistante
                     InstanceReader reader1 = new InstanceReader("instances/instance_" + i + ".csv");
-                    reader1.readInstance(em);
+                    reader1.readInstance(fenetre,em);
 
                     System.out.println("=> Reader : " + i);
                     et.commit();
