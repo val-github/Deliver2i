@@ -35,6 +35,7 @@ public class Solution implements Serializable {
     private Integer idSolution;
 
     @Column(name = "Temps_Mort", nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date tempsMort;
     
     @Column(name = "Nombre_Livreur", nullable = false)
@@ -52,13 +53,34 @@ public class Solution implements Serializable {
         this.shifts = new LinkedList<>();       
     }
     
+    public Solution(Integer idSolution, Date tempsMort, Integer nombreLivreur) {
+        this.idSolution = idSolution;
+        this.tempsMort = tempsMort;
+        this.nombreLivreur = nombreLivreur;
+    }
+    
      public Solution(Instance i) {
         this.tempsMort = null;
         this.nombreLivreur = 0;
-        instance = i;
+        if(i!=null)
+        {
+            instance = i;
+        }
         this.shifts = new LinkedList<>();        
     }
-     
+    
+    public Integer getIdSolution() {
+        return idSolution;
+    }
+
+    public Date getTempsMort() {
+        return tempsMort;
+    }
+
+    public Integer getNombreLivreur() {
+        return nombreLivreur;
+    }
+    
     public void addShift(Shift s) {
         
         if(s != null)
@@ -84,9 +106,10 @@ public class Solution implements Serializable {
     }*/
     //fonction permettant de calculer le temps mort total de la solution
     
-    private float nombreLivreurs()
-    {
-        return this.shifts.size();
+    private void nombreLivreur() {
+        int livreur = this.shifts.size();
+        
+        this.nombreLivreur = livreur;
     }
     
     private void tempsMort()
