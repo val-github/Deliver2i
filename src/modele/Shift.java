@@ -6,7 +6,6 @@
 package modele;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -15,8 +14,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -43,17 +40,16 @@ public class Shift implements Serializable {
     private Date horaireFin; //f
     
     @Column(name = "Duree", nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date duree;
     
     @Column(name = "Temps_mort", nullable = false)
-    public Date tempsMort;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date tempsMort;
     
     @OneToMany
     private List<Tournee> tournees;
     
-    /*@ManyToOne
-    @JoinColumn(name="id_Solution")
-    private Solution solution;*/
     
     ///ATTENTION CONDITION !!!!
     public Shift() {
@@ -61,8 +57,7 @@ public class Shift implements Serializable {
         this.horaireFin = new Date(0,0,0,10,0);
         Duree(horaireDebut,horaireFin);
         TempsMort();
-        //tournees = new LinkedList<>();
-        //this.solution = new Solution();
+        tournees = new LinkedList<>();
     }
     
     public Shift(Date horaireDebut, Date horaireFin) {
@@ -70,10 +65,38 @@ public class Shift implements Serializable {
         this.horaireFin = horaireFin;
         Duree(horaireDebut,horaireFin);
         TempsMort();
-        //tournees = new LinkedList<>();
-        //this.solution = new Solution();
+        tournees = new LinkedList<>();
     }
     
+    public Shift(Integer idShift, Date horaireDebut, Date horaireFin, Date duree, Date tempsMort) {
+        this.idShift = idShift;
+        this.horaireDebut = horaireDebut;
+        this.horaireFin = horaireFin;
+        this.duree = duree;
+        this.tempsMort = tempsMort;
+        this.tournees = new LinkedList<>();
+    }
+    
+    public Integer getIdShift() {
+        return idShift;
+    }
+
+    public Date getHoraireDebut() {
+        return horaireDebut;
+    }
+
+    public Date getHoraireFin() {
+        return horaireFin;
+    }
+
+    public Date getDuree() {
+        return duree;
+    }
+    
+    public Date getTempsMort() {
+        return tempsMort;
+    }
+
     public boolean addTournee(Tournee t)
     {
         if(t!=null)
