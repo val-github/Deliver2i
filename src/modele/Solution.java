@@ -120,7 +120,7 @@ public class Solution implements Serializable {
         shif=this.shifts;
         for (Shift s : shif)
         {
-            Date tm1=new Date(0,0,0,s.tempsMort.getHours(),s.tempsMort.getMinutes());
+            Date tm1=new Date(0,0,0,s.getTempsMort.getHours(),s.getTempsMort.getMinutes());
             int H,M;
             H=tm.getHours()+tm1.getHours();
             M=tm.getMinutes()+tm1.getMinutes();
