@@ -31,10 +31,17 @@ public class Tournee implements Serializable {
     @Column(name = "Horaire_debut", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date horaireDebut;
-    
+
     @Column(name = "Horaire_fin", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date horaireFin;
+    
+    @Column(name = "Duree", nullable = false)
+    private int duree;
+    public int getDuree() {
+        return duree;
+    }
+    
     
     public Tournee() {
         this.horaireDebut = new Date(0,0,0,9,0);
@@ -60,6 +67,12 @@ public class Tournee implements Serializable {
 
     public Date getHoraireFin() {
         return horaireFin;
+    }
+    
+    public void Duree(Date debut,Date fin)
+    {
+        int nouv=(fin.getHours()-debut.getHours())*60+(fin.getMinutes()-debut.getMinutes());
+        this.duree=nouv;
     }
     
     @Override

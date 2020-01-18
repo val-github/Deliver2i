@@ -62,7 +62,7 @@ public class InstanceReader {
      * @throws ReaderException lorsque les donnees dans le fichier d'instance 
      * sont manquantes ou au mauvais format.
      */
-    public void readInstance(AffichageInstance fenetre, EntityManager em) throws ReaderException {
+    public void readInstance(EntityManager em) throws ReaderException {
         Scanner scanner = null;
         try 
         {

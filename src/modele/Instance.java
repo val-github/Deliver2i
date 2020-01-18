@@ -36,13 +36,12 @@ public class Instance implements Serializable {
     private String nom;
     
     @Column(name = "Duree_minimale", nullable = false)
-    private Integer dureeMin;
+    private int dureeMin;
     
     @Column(name = "Duree_maximale", nullable = false)
-    private Integer dureeMax;
+    private int dureeMax;
     
     @Column(name = "Date_du_jour", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
     private Date date;
     
     @OneToMany
@@ -52,11 +51,11 @@ public class Instance implements Serializable {
         this.nom = "";
         this.dureeMin = 0;
         this.dureeMax = 0;
-        this.date = new Date(0,0,0,0,0);
+        this.date = null;
         tournees = new LinkedList<>();// accepte les doublons et on se sais combien on a de tournees
     }
 
-    public Instance(String nom, Integer dureeMin, Integer dureeMax, Date date) {
+    public Instance(String nom, int dureeMin, int dureeMax, Date date) {
         this.nom = nom;
         this.dureeMin = dureeMin;
         this.dureeMax = dureeMax;
@@ -75,18 +74,45 @@ public class Instance implements Serializable {
         return false;
     }
     
-    public void creationShift(EntityManager em) //Solution triviale
+    /*public void creationShift(EntityManager em) //Solution triviale
     {
         Solution sol = new Solution(this);
         for(Tournee t : tournees)
         {
+            //Solution triviale
             Shift s = new Shift();
             s.addTournee(t);
             creationSolution(sol,s);
             em.persist(s);
         }
         em.persist(sol);
-    }
+    }*/
+    
+    public void creationShift(EntityManager em) //deuxièmme version
+    {
+        Solution sol = new Solution(this);
+        int len=tournees.size();
+        List<Tournee> tourn=tournees;
+        while(len > 0)
+        { 
+            Tournee t=tourn.get(0);
+            Shift s = new Shift(t.getHoraireDebut());
+            s.addTournee(t);
+            int a = 0;
+            tourn.remove(0);
+            for (Tournee t2 : tournees)
+            {
+                if (t2.getDuree()<s.getTempsMort())
+                {
+                    s.addTournee(t2);
+                    tourn.remove(t2);
+                }   
+            }
+        }
+            
+            
+        }
+        //em.persist(sol);
     
     private void creationSolution(Solution sol,Shift s)
     {
@@ -105,6 +131,10 @@ public class Instance implements Serializable {
     public String toString() {
         return "Instance{" + "idInstance=" + idInstance + ", nom=" + nom + ", dureeMin=" + dureeMin + ", dureeMax=" + dureeMax + ", date=" + date + /*", tournees=" + tournees + */'}';
     }
+    
+    }
+    
+    
 
     
-}
+

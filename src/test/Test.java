@@ -21,7 +21,7 @@ public class Test {
         final EntityManagerFactory emf =
         Persistence.createEntityManagerFactory("PROJETPU");  
         // Ici on met pas le nom de la base de donne mais le nom 
-        //qu'il y a dans persistance.xml
+        // qu'il y a dans persistance.xml
         final EntityManager em = emf.createEntityManager();
         try
         {
@@ -33,7 +33,7 @@ public class Test {
                 et.begin();
                 // creation d’une entite persistante
                 InstanceReader reader = new InstanceReader("instances/instance_test.csv");
-                reader.readInstance(fenetre,em);
+                reader.readInstance(em);
 
                 System.out.println("=> Reader : " + reader);
                 et.commit();
@@ -43,7 +43,7 @@ public class Test {
                     et.begin();
                     // creation d’une entite persistante
                     InstanceReader reader1 = new InstanceReader("instances/instance_" + i + ".csv");
-                    reader1.readInstance(fenetre,em);
+                    reader1.readInstance(em);
 
                     System.out.println("=> Reader : " + i);
                     et.commit();

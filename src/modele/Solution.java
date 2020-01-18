@@ -35,8 +35,7 @@ public class Solution implements Serializable {
     private Integer idSolution;
 
     @Column(name = "Temps_Mort", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date tempsMort;
+    private int tempsMort;
     
     @Column(name = "Nombre_Livreur", nullable = false)
     private Integer nombreLivreur;
@@ -48,7 +47,7 @@ public class Solution implements Serializable {
     private List<Shift> shifts;
     
     public Solution() {
-        this.tempsMort = null;
+        this.tempsMort = 0;
         this.nombreLivreur = 0;
         this.shifts = new LinkedList<>();       
     }
@@ -60,7 +59,7 @@ public class Solution implements Serializable {
     }
     
      public Solution(Instance i) {
-        this.tempsMort = null;
+        this.tempsMort = 0;
         this.nombreLivreur = 0;
         if(i!=null)
         {
@@ -114,24 +113,14 @@ public class Solution implements Serializable {
     
     private void tempsMort()
     {
-        Date tm=null;
+        int tm=0;
         List<Shift> shif;
         shif= new LinkedList<>();
         shif=this.shifts;
         for (Shift s : shif)
         {
-            Date tm1=new Date(0,0,0,s.getTempsMort.getHours(),s.getTempsMort.getMinutes());
-            int H,M;
-            H=tm.getHours()+tm1.getHours();
-            M=tm.getMinutes()+tm1.getMinutes();
-            if(M>60)
-            {
-                int H1=M/60;
-                int M1=M%60;
-                tm= new Date(0,0,0,H+H1,M1);
-            }else{
-                tm= new Date(0,0,0,H,M);
-            }
+            int tm1=s.getTempsMort();
+            tm=tm+tm1;
         }
         this.tempsMort=tm;
     }
