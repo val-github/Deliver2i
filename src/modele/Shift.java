@@ -128,7 +128,7 @@ public class Shift implements Serializable {
         tourn=this.tournees;
         for (Tournee t : tourn)
         {
-            Date d = new Date(0,0,0,t.horaireFin.getHours()-t.horaireDebut.getHours(),t.horaireFin.getMinutes()-t.horaireDebut.getMinutes());
+            Date d = new Date(0,0,0,t.getHoraireFin().getHours()-t.getHoraireDebut().getHours(),t.getHoraireFin().getMinutes()-t.getHoraireDebut().getMinutes());
             int H,M;
             H=dureeT.getHours()+d.getHours();
             M=dureeT.getMinutes()+d.getMinutes();
